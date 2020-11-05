@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Visual Studio\\source\\dotnetcondapackage\\LegacyDatasystemDotNetMongoB.csproj": {}
+    "D:\\Visual Studio\\source\\LegacyDatasystemDotNetMongoB\\LegacyDatasystemDotNetMongoB\\LegacyDatasystemDotNetMongoB.csproj": {}
   },
   "projects": {
-    "D:\\Visual Studio\\source\\dotnetcondapackage\\LegacyDatasystemDotNetMongoB.csproj": {
+    "D:\\Visual Studio\\source\\LegacyDatasystemDotNetMongoB\\LegacyDatasystemDotNetMongoB\\LegacyDatasystemDotNetMongoB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Visual Studio\\source\\dotnetcondapackage\\LegacyDatasystemDotNetMongoB.csproj",
+        "projectUniqueName": "D:\\Visual Studio\\source\\LegacyDatasystemDotNetMongoB\\LegacyDatasystemDotNetMongoB\\LegacyDatasystemDotNetMongoB.csproj",
         "projectName": "LegacyDatasystemDotNetMongoB",
-        "projectPath": "D:\\Visual Studio\\source\\dotnetcondapackage\\LegacyDatasystemDotNetMongoB.csproj",
+        "projectPath": "D:\\Visual Studio\\source\\LegacyDatasystemDotNetMongoB\\LegacyDatasystemDotNetMongoB\\LegacyDatasystemDotNetMongoB.csproj",
         "packagesPath": "C:\\Users\\Kanchana Gyathri\\.nuget\\packages\\",
-        "outputPath": "D:\\Visual Studio\\source\\dotnetcondapackage\\obj\\",
+        "outputPath": "D:\\Visual Studio\\source\\LegacyDatasystemDotNetMongoB\\LegacyDatasystemDotNetMongoB\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Kanchana Gyathri\\AppData\\Roaming\\NuGet\\NuGet.Config",

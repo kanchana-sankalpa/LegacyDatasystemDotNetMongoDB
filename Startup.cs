@@ -15,6 +15,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using LegacyDatasystemDotNetMongoB.Services;
+using LegacyDatasystemDotNetMongoB.Helpers;
 
 namespace dotnetcondapackage
 {
@@ -61,9 +63,9 @@ namespace dotnetcondapackage
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<SearchService>();
 
 
-     
             services.AddControllersWithViews();
            // services.AddControllers();
         }
