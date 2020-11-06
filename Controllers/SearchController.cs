@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using LegacyDatasystemDotNetMongoB.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
+using MongoDB.Bson.IO;
 
 namespace LegacyDatasystemDotNetMongoB.Controllers
 {
@@ -24,12 +26,13 @@ namespace LegacyDatasystemDotNetMongoB.Controllers
         public IActionResult GetAllResults(string collection, string searchtext)
         {
             //var user = _searchService.FindSearch(collection, searchtext);
-            var results = _searchService.FindSearch(collection, searchtext);
-
-            if (results == null)
+            List<BsonDocument> results = _searchService.FindSearch(collection, searchtext);
+            var finalResult = results.ToJson(new JsonWriterSettings { OutputMode = JsonOutputMode.Strict });
+          //  return Content(finalResult);
+            if (finalResult == null)
                 return NotFound();
 
-            return Ok(results);
+            return Ok(finalResult);
         }
     }
 }
