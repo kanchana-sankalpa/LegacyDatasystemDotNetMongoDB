@@ -37,8 +37,6 @@ D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongo
 D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\obj\Debug\netcoreapp3.1\LegacyDatasystemDotNetMongoB.csprojAssemblyReference.cache
 D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\obj\Debug\netcoreapp3.1\LegacyDatasystemDotNetMongoB.AssemblyInfoInputs.cache
 D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\obj\Debug\netcoreapp3.1\LegacyDatasystemDotNetMongoB.AssemblyInfo.cs
-D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\obj\Debug\netcoreapp3.1\LegacyDatasystemDotNetMongoB.csproj.CoreCompileInputs.cache
-D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\obj\Debug\netcoreapp3.1\LegacyDatasystemDotNetMongoB.MvcApplicationPartsAssemblyInfo.cache
 D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\obj\Debug\netcoreapp3.1\LegacyDatasystemDotNetMongoB.RazorAssemblyInfo.cache
 D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\obj\Debug\netcoreapp3.1\LegacyDatasystemDotNetMongoB.RazorAssemblyInfo.cs
 D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\obj\Debug\netcoreapp3.1\LegacyDatasystemDotNetMongoB.TagHelpers.input.cache
@@ -63,3 +61,12 @@ D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongo
 D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\obj\Debug\netcoreapp3.1\LegacyDatasystemDotNetMongoB.dll
 D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\obj\Debug\netcoreapp3.1\LegacyDatasystemDotNetMongoB.pdb
 D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\obj\Debug\netcoreapp3.1\LegacyDatasystemDotNetMongoB.genruntimeconfig.cache
+D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\bin\Debug\netcoreapp3.1\System.Text.Json.dll
+D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\bin\Debug\netcoreapp3.1\snappy32.dll
+D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\bin\Debug\netcoreapp3.1\snappy64.dll
+D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\bin\Debug\netcoreapp3.1\libzstd.dll
+D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\obj\Debug\netcoreapp3.1\LegacyDatasystemDotNetMongoB.csproj.CoreCompileInputs.cache
+D:\Visual Studio\source\LegacyDatasystemDotNetMongoB\LegacyDatasystemDotNetMongoB\obj\Debug\netcoreapp3.1\LegacyDatasystemDotNetMongoB.MvcApplicationPartsAssemblyInfo.cache

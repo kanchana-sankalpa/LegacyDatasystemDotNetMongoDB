@@ -24,7 +24,7 @@ namespace LegacyDatasystemDotNetMongoB.Controllers
         public IActionResult GetAllResults(string collection, string searchtext)
         {
             //var user = _searchService.FindSearch(collection, searchtext);
-            var results = _searchService.GetEntityIdByOriginalEmail(collection, searchtext);
+            var results = _searchService.FindSearch(collection, searchtext);
 
             if (results == null)
                 return NotFound();

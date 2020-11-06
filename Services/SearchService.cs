@@ -7,6 +7,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Driver.Linq;
+using System.Text.RegularExpressions;
+
 
 //https://www.niceonecode.com/blog/64/left-join-in-mongodb-using-the-csharp-driver-and-linq
 // index https://stackoverflow.com/questions/35019313/checking-if-an-index-exists-in-mongodb
@@ -17,6 +20,34 @@ namespace LegacyDatasystemDotNetMongoB.Services
 {
     public class SearchService
     {
+
+
+        private IMongoDatabase _connection;
+        public SearchService(IDatabaseSettings settings)
+        {
+            var client = new MongoClient(settings.ConnectionString);
+            _connection = client.GetDatabase(settings.DatabaseName);
+
+           // IMongoCollection<BsonDocument> alldocs = _connection.GetCollection<BsonDocument>("AmsLights.Project_Object");
+           // alldocs.Indexes.CreateOne(new CreateIndexModel<BsonDocument>(Builders<BsonDocument>.IndexKeys.Text("$**")));
+
+        }
+
+
+        public List<BsonDocument> FindSearch(string collectionName, string searchWord)
+        {
+            IMongoCollection<BsonDocument> alldocs = _connection.GetCollection<BsonDocument>(collectionName);
+            //var filter = Builders<BsonDocument>.Filter.Eq("$text",  "{ $search: "+ searchWord + " }" );
+            var filter = Builders<BsonDocument>.Filter.Text(searchWord);
+            // var query = alldocs.Find(filter).ToList();
+            List < BsonDocument > query = alldocs.Find(filter).ToList();
+
+
+            return query;
+        }
+
+
+        /*
         // IEnumerable<Collation>[] GetAllResults()
         //{
         //            return 
@@ -48,24 +79,49 @@ namespace LegacyDatasystemDotNetMongoB.Services
 
 
 
-        public List<BsonDocument> FindSearch(string collectionName, string searchWord)
+        public dynamic FindSearch(string collectionName, string searchWord)
         {
             //IMongoQuery query = Query.Text(searchWord);
             //List<T> find = getCollection<T>(collectionName).Find(query).ToList();
-            IMongoCollection<BsonDocument> mongoCollection = GetCollection(collectionName);
+//IMongoCollection<BsonDocument> mongoCollection = GetCollection(collectionName);
             var builder = Builders<BsonDocument>.Filter;
             //var filter = builder.Regex("description", "(java)") | builder.Regex("description", "(coffee shop)");
-            var filter = Builders<BsonDocument>.Filter.Text(searchWord);
-            List<BsonDocument> result =  mongoCollection.Find(filter).ToList();
+            //var filter = Builders<BsonDocument>.Filter.Text(searchWord);
+            // List<BsonDocument> result =  mongoCollection.Find(filter).ToList();
             //List<T> find = mongoCollection<T>(collectionName).Find(searchWord).ToList();
-            return result;
+            //return result;
+            var mongoCollection = GetCollection(collectionName);
+             var filter = Builders<BsonDocument>.Filter.Text(searchWord, new TextSearchOptions { CaseSensitive = false });
+             return mongoCollection.Find(filter).ToList();
+
         }
+
+        [Obsolete]
+        public List<BsonDocument> FindSearchSync(string collectionName, string searchWord)
+        {
+            var mongoCollection = GetCollection(collectionName);
+
+            //return  mongoCollection.Aggregate()
+            //.Match(Builders<BsonDocument>.Filter.Text(searchWord)).ToList();
+            //list inexes
+            return mongoCollection.Indexes.List().ToList(); 
+
+            var filter = Builders<BsonDocument>.Filter.Text(searchWord, new TextSearchOptions { CaseSensitive = false });
+
+            var results = mongoCollection.Find(filter).ToList();
+        }
+
+
 
         public async Task<IList> GetEntityIdByOriginalEmail(string collectionName, string searchWord)
         {
             var mongoCollection = GetCollection(collectionName);
             var filter = Builders<BsonDocument>.Filter.Text(searchWord);
-            return await mongoCollection.Find(filter).ToListAsync();
+            //return await mongoCollection.Find().ToListAsync();
+            // return await mongoCollection.Find(filter).ToListAsync();
+
+            return await mongoCollection.Aggregate()
+            .Match(Builders<BsonDocument>.Filter.Text(searchWord)).ToListAsync();
         }
 
         // public async Task<Entity> GetEntityIdByOriginalEmail(string originalEmail)
@@ -74,5 +130,7 @@ namespace LegacyDatasystemDotNetMongoB.Services
         //var filter = Builders<Entity>.Filter.Regex("x", new BsonRegularExpression(originalEmail, "i"));
         //  return await collection.Find(filter).FirstOrDefaultAsync();
         //}
+         */
     }
+
 }
