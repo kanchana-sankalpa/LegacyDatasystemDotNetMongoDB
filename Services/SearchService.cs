@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Driver.Linq;
 using System.Text.RegularExpressions;
+using dotnetcondapackage.Services;
 
 
 //https://www.niceonecode.com/blog/64/left-join-in-mongodb-using-the-csharp-driver-and-linq
@@ -23,8 +24,10 @@ namespace LegacyDatasystemDotNetMongoB.Services
 
 
         private IMongoDatabase _connection;
-        public SearchService(IDatabaseSettings settings)
+       
+        public SearchService(IDatabaseSettings settings, UserService userService)
         {
+           
             var client = new MongoClient(settings.ConnectionString);
             _connection = client.GetDatabase(settings.DatabaseName);
 
@@ -41,10 +44,15 @@ namespace LegacyDatasystemDotNetMongoB.Services
             var filter = Builders<BsonDocument>.Filter.Text(searchWord);
             // var query = alldocs.Find(filter).ToList();
             List < BsonDocument > query = alldocs.Find(filter).ToList();
-
-
             return query;
         }
+
+        public List<BsonDocument> SearchText( string searchWord)
+        {
+            
+        }
+
+
 
 
         /*
@@ -133,4 +141,4 @@ namespace LegacyDatasystemDotNetMongoB.Services
          */
     }
 
-}
+    }

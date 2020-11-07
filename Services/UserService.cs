@@ -31,6 +31,8 @@ namespace dotnetcondapackage.Services
         private readonly IMongoCollection<User> _users;
         private readonly IMongoCollection<Role> _roles;
         private readonly IMongoCollection<UserRole> _userRoles;
+        private readonly IMongoCollection<RoleDataset> _roleDataset;
+        private readonly IMongoCollection<Dataset> _dataset;
         private readonly AppSettings _appSettings;
 
         public UserService(IDatabaseSettings settings, IOptions<AppSettings> appSettings)
@@ -67,12 +69,15 @@ namespace dotnetcondapackage.Services
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+                
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.UserId.ToString()),
-                    new Claim(ClaimTypes.Role,"1"),
-                    new Claim(ClaimTypes.Role,"2")
-                }),
+                    //new Claim("numberORoles", ""),
+                   //https://www.c-sharpcorner.com/article/jwt-json-web-token-authentication-in-asp-net-core/
+                 //   var roleIdList =  getUserRoles(user.UserId)
+             
+        }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
@@ -103,6 +108,28 @@ namespace dotnetcondapackage.Services
                 isAdmin = true;
             }
             return isAdmin;
+        }
+
+        private List<UserRole> getUserRoles(int id)
+        {
+
+            var userroles = _userRoles.Find(x => x.UserId == id).ToList();
+            return userroles;
+        }
+
+        public List<Dataset> getUserRoleDataset(int id)
+        {
+            var result = from ur in _userRoles.AsQueryable()
+                         join rd in _roleDataset.AsQueryable()
+                         on ur.RoleId equals rd.RoleId
+                         join d in _dataset.AsQueryable()
+                         on rd.DatasetId equals d.DatasetId
+                         where (ur.UserId ==id)
+                         select new Dataset
+                         {
+                             SchemaDatasetName = d.Schema+d.DatasetName
+                         };
+          return result.ToList();
         }
 
         IEnumerable<User> IUserService.GetAllUser()

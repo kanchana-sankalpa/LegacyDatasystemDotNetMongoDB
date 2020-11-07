@@ -41,6 +41,7 @@ namespace dotnetcondapackage.Controllers
         public IActionResult GetAllUsers()
         {
             var currentUserId = int.Parse(User.Identity.Name);
+            
             if (!_userService.AuthenrticateAdmin(currentUserId))
                 return Forbid();
             var users = _userService.GetAllUser();
