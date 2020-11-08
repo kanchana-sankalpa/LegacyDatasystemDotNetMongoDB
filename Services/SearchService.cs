@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using MongoDB.Driver.Linq;
 using System.Text.RegularExpressions;
 using dotnetcondapackage.Services;
+using dotnetcondapackage.Entities;
 
 
 //https://www.niceonecode.com/blog/64/left-join-in-mongodb-using-the-csharp-driver-and-linq
@@ -25,7 +26,7 @@ namespace LegacyDatasystemDotNetMongoB.Services
 
         private IMongoDatabase _connection;
        
-        public SearchService(IDatabaseSettings settings, UserService userService)
+        public SearchService(IDatabaseSettings settings)
         {
            
             var client = new MongoClient(settings.ConnectionString);
@@ -43,13 +44,54 @@ namespace LegacyDatasystemDotNetMongoB.Services
             //var filter = Builders<BsonDocument>.Filter.Eq("$text",  "{ $search: "+ searchWord + " }" );
             var filter = Builders<BsonDocument>.Filter.Text(searchWord);
             // var query = alldocs.Find(filter).ToList();
-            List < BsonDocument > query = alldocs.Find(filter).ToList();
+            List<BsonDocument> query;
+            try
+            {
+               query = alldocs.Find(filter).ToList();
+            }
+            catch (MongoCommandException ex)
+            {
+                query = new List<BsonDocument>();
+            }
+             
             return query;
         }
 
-        public List<BsonDocument> SearchText( string searchWord)
+        public async Task<List<BsonDocument>> FindSearchAsync( string searchWord)
         {
-            
+            string collectionName = "AmsLights.Project_Object";
+            IMongoCollection<BsonDocument> alldocs = _connection.GetCollection<BsonDocument>(collectionName);
+            //var filter = Builders<BsonDocument>.Filter.Eq("$text",  "{ $search: "+ searchWord + " }" );
+            var filter = Builders<BsonDocument>.Filter.Text(searchWord);
+            // var query = alldocs.Find(filter).ToList();
+            return await alldocs.Find(filter).ToListAsync();
+           // return query;
+        }
+
+        public async Task<List<BsonDocument>> FindSearchCollectionAsync(string collectionName,string searchWord)
+        {
+            IMongoCollection<BsonDocument> alldocs = _connection.GetCollection<BsonDocument>(collectionName);
+            var filter = Builders<BsonDocument>.Filter.Text(searchWord);
+            List<BsonDocument> query;
+           // return await alldocs.Find(filter).ToListAsync();
+            try
+            {
+                query = await alldocs.Find(filter).ToListAsync();
+            }
+            catch (MongoCommandException ex)
+            {
+
+                query = new List<BsonDocument>();
+            }
+
+            return query;
+        }
+
+
+        public List<BsonDocument> SearchText(Dataset schemaDatases, string searchWord)
+        {
+           
+            return null;
         }
 
 

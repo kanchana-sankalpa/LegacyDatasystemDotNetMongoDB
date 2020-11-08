@@ -22,6 +22,7 @@ namespace dotnetcondapackage.Services
         IEnumerable<User> GetAllUser();
         User GetUserById(int id);
 
+        public List<Dataset> getUserRoleDataset(int id);
         bool AuthenrticateAdmin(int id);
     }
 
@@ -42,6 +43,8 @@ namespace dotnetcondapackage.Services
             _users = database.GetCollection<User>("dbo.User");
             _roles = database.GetCollection<Role>("dbo.Role");
             _userRoles = database.GetCollection<UserRole>("dbo.UserRole");
+            _roleDataset = database.GetCollection<RoleDataset>("dbo.RoleDataset");
+            _dataset = database.GetCollection<Dataset>("dbo.Dataset");
             _appSettings = appSettings.Value;
         }
 
@@ -127,7 +130,7 @@ namespace dotnetcondapackage.Services
                          where (ur.UserId ==id)
                          select new Dataset
                          {
-                             SchemaDatasetName = d.Schema+d.DatasetName
+                             SchemaDatasetName = d.Schema+"."+d.DatasetName
                          };
           return result.ToList();
         }
