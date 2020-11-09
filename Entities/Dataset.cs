@@ -22,7 +22,7 @@ namespace dotnetcondapackage.Entities
 
         public string SchemaDatasetName { get; set; }
 
-        public List<BsonDocument> Data { get; set; }
+        public List<object> Data { get; set; }
 
     }
 }

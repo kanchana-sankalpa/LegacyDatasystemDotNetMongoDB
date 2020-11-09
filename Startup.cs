@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using LegacyDatasystemDotNetMongoB.Services;
 using LegacyDatasystemDotNetMongoB.Helpers;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using Newtonsoft.Json;
 
 namespace dotnetcondapackage
 {
@@ -29,10 +30,25 @@ namespace dotnetcondapackage
         }
 
         public IConfiguration Configuration { get; }
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:10750"
+                                                        ).WithMethods("POST", "GET", "PUT")
+                                         .WithHeaders("*");
+                                  });
+            });
+
+
             services.Configure<DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)));
             services.AddSingleton<IDatabaseSettings>(x => x.GetRequiredService<IOptions<DatabaseSettings>>().Value);
             services.AddSingleton<SubmissionService>();
@@ -68,8 +84,10 @@ namespace dotnetcondapackage
 
 
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
-                  options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); 
+                  options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             // services.AddControllers();
+
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -97,12 +115,12 @@ namespace dotnetcondapackage
 
             app.UseAuthorization();
 
+        
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                // endpoints.MapControllerRoute(
-                //   name: "default",
-                // pattern: "{controller=Home}/{action=Index}/{id?}");
+                
             });
         }
     }

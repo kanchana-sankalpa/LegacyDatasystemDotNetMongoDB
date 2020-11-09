@@ -67,9 +67,12 @@ namespace LegacyDatasystemDotNetMongoB.Controllers
             foreach (Dataset dataitem in results)
             {
                 List<BsonDocument> docResults = await _searchService.FindSearchCollectionAsync(dataitem.SchemaDatasetName,searchtext);
-                dataitem.Data = docResults;
+                // BsonDocument.Parse(Newtonsoft.Json.JsonConvert.SerializeObject(docResults));
+                // dataitem.Data = docResults;
+                //dataitem.Data = docResults.ToJson<List<MongoDB.Bson.BsonDocument>>();
+                dataitem.Data = docResults.ConvertAll(BsonTypeMapper.MapToDotNetValue);
             }
-            return Ok(results.ToJson());
+            return Ok(results);
 
             /*
             List<BsonDocument> value = await _searchService.FindSearchAsync(searchtext);
