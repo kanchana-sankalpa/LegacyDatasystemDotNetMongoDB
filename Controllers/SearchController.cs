@@ -105,5 +105,26 @@ namespace LegacyDatasystemDotNetMongoB.Controllers
             return Ok(arrayList.ToJson());
         }
 
+        [HttpGet("indexing/text")]
+        public IActionResult textindexing()
+        {
+            var arrayList = new List<string>();
+            IEnumerable<Dataset> results = _userService.GetAllDatasets();
+            foreach (Dataset dataitem in results)
+            {
+              string response=  _searchService.createTextIndex(dataitem.Schema+ "."+dataitem.DatasetName);
+                arrayList.Add(response);
+            } 
+                return Ok(arrayList.ToJson());
+        }
+
+        [HttpGet("indexing/text/{schemacollection}")]
+        public IActionResult textindexingcollecton(string schemacolllection)
+        {
+         
+            string response = _searchService.createTextIndex(schemacolllection);
+            return Ok(response);
+        }
+
     }
 }

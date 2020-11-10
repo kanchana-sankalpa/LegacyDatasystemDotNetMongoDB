@@ -15,7 +15,6 @@ namespace dotnetcondapackage.Entities
         public int DatasetId { get; set; }
         public string DatasetName { get; set; }
         public string Schema { get; set; }
-       
         public int LegacySystemId { get; set; }
         public string LastModifiedBy { get; set; }
         public DateTime LastModifiedTime { get; set; }

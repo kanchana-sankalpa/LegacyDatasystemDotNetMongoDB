@@ -21,5 +21,7 @@ namespace dotnetcondapackage.Entities
         public string LastModifiedBy { get; set; }
         public DateTime LastModifiedTime { get; set; }
         public string Token { get; set; }
+
+        public string Role { get; set; }
     }
 }

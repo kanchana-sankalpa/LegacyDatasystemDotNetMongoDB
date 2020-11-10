@@ -1,7 +1,11 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/LegacyDatasystemDotNetMongoB",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:10750",
       "sslPort": 0
@@ -18,10 +22,13 @@
     "dotnetcondapackage": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "http://localhost:5000"
+    },
+    "newProfile1": {
+      "commandName": "IIS"
     }
   }
 }

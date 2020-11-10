@@ -20,6 +20,8 @@ namespace dotnetcondapackage.Services
     {
         User Authenticate(string username, string password);
         IEnumerable<User> GetAllUser();
+
+        IEnumerable<Dataset> GetAllDatasets();
         User GetUserById(int id);
 
         public List<Dataset> getUserRoleDataset(int id);
@@ -61,10 +63,15 @@ namespace dotnetcondapackage.Services
 
             // var user = _users.Find(x => x.Username == username && x.Password == password).SingleOrDefault();
             var user = _users.Find(x => x.Username == username).SingleOrDefault();
+             var AdminRole = "";
+                if (AuthenrticateAdmin(user.UserId))
+            {
+                AdminRole = "Admin";
+                user.Role = AdminRole;
+            }
 
-
-            // return null if user not found
-            if (user == null)
+                // return null if user not found
+                if (user == null)
                 return null;
 
             // authentication successful so generate jwt token
@@ -76,6 +83,7 @@ namespace dotnetcondapackage.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.UserId.ToString()),
+                    new Claim(ClaimTypes.Role, AdminRole)
                     //new Claim("numberORoles", ""),
                    //https://www.c-sharpcorner.com/article/jwt-json-web-token-authentication-in-asp-net-core/
                  //   var roleIdList =  getUserRoles(user.UserId)
@@ -88,6 +96,29 @@ namespace dotnetcondapackage.Services
             user.Token = tokenHandler.WriteToken(token);
 
             return user.WithoutPassword();
+        }
+
+        private bool AuthenrticateAdmin(int userId)
+        {
+            bool isAdmin = false;
+            var result = from o in _users.AsQueryable()
+                         join i in _userRoles.AsQueryable()
+                         on o.UserId equals i.UserId
+                         join r in _roles.AsQueryable()
+                         on i.RoleId equals r.RoleId
+                         where (o.UserId == userId && r.RoleName == "Admin")
+                         select new
+                         {
+                             _Id = o.UserId
+                         };
+
+            int count = result.Count();
+
+            if (count > 0)
+            {
+                isAdmin = true;
+            }
+            return isAdmin;
         }
 
         bool IUserService.AuthenrticateAdmin(int id)
@@ -130,6 +161,7 @@ namespace dotnetcondapackage.Services
                          where (ur.UserId ==id)
                          select new Dataset
                          {
+                             DatasetName=d.DatasetName,
                              SchemaDatasetName = d.Schema+"."+d.DatasetName
                          };
           return result.ToList();
@@ -141,6 +173,11 @@ namespace dotnetcondapackage.Services
             return user.WithoutPasswords();
         }
 
+        IEnumerable<Dataset> IUserService.GetAllDatasets()
+        {
+            return _dataset.Find(Builders<Dataset>.Filter.Empty).ToList();
+           
+        }
         User IUserService.GetUserById(int id)
         {
             var user = _users.Find(x => x.UserId == id).SingleOrDefault();

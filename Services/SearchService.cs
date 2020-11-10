@@ -25,15 +25,18 @@ namespace LegacyDatasystemDotNetMongoB.Services
 
 
         private IMongoDatabase _connection;
-       
+        private IMongoDatabase _connection2;
         public SearchService(IDatabaseSettings settings)
         {
            
             var client = new MongoClient(settings.ConnectionString);
             _connection = client.GetDatabase(settings.DatabaseName);
 
-           // IMongoCollection<BsonDocument> alldocs = _connection.GetCollection<BsonDocument>("AmsLights.Project_Object");
-           // alldocs.Indexes.CreateOne(new CreateIndexModel<BsonDocument>(Builders<BsonDocument>.IndexKeys.Text("$**")));
+            var client2 = new MongoClient("mongodb://legsysadmin:SbIvcRSwVqFZ-dqZ8IvZE@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false");
+            _connection2 = client2.GetDatabase("legacy_systems");
+    
+            // IMongoCollection<BsonDocument> alldocs = _connection.GetCollection<BsonDocument>("AmsLights.Project_Object");
+            // alldocs.Indexes.CreateOne(new CreateIndexModel<BsonDocument>(Builders<BsonDocument>.IndexKeys.Text("$**")));
 
         }
 
@@ -95,7 +98,39 @@ namespace LegacyDatasystemDotNetMongoB.Services
         }
 
 
+        public string  createTextIndex(string collectionName)
+        {
+            string status;
+            try
+            {
+                IMongoCollection<BsonDocument> alldocs = _connection2.GetCollection<BsonDocument>(collectionName);
+                alldocs.Indexes.CreateOne(new CreateIndexModel<BsonDocument>(Builders<BsonDocument>.IndexKeys.Text("$**")));
+                status = collectionName;
+            }
+            catch (Exception ex)
+            {
+               
+                status = ex.ToString();
+            }
+            return status;
+        }
 
+        //public async Task<List<BsonDocument>> createTextIndexAsync(string collectionName)
+        //{
+        //    string status;
+        //    try
+        //    {
+        //        IMongoCollection<BsonDocument> alldocs = _connection2.GetCollection<BsonDocument>(collectionName);
+        //        alldocs.Indexes.CreateOne(new CreateIndexModel<BsonDocument>(Builders<BsonDocument>.IndexKeys.Text("$**")));
+        //        status = collectionName;
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        status = ex.ToString();
+        //    }
+        //    return status;
+        //}
 
         /*
         // IEnumerable<Collation>[] GetAllResults()
@@ -183,4 +218,4 @@ namespace LegacyDatasystemDotNetMongoB.Services
          */
     }
 
-    }
+}
