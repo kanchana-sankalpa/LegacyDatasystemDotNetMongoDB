@@ -105,6 +105,7 @@ namespace LegacyDatasystemDotNetMongoB.Controllers
             return Ok(arrayList.ToJson());
         }
 
+        //[Authorize(Roles = Role.Admin)]
         [HttpGet("indexing/text")]
         public IActionResult textindexing()
         {

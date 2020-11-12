@@ -21,11 +21,14 @@ namespace dotnetcondapackage.Services
         User Authenticate(string username, string password);
         IEnumerable<User> GetAllUser();
 
+        public List<UserRole> getUserRoles(int id);
         IEnumerable<Dataset> GetAllDatasets();
         User GetUserById(int id);
 
         public List<Dataset> getUserRoleDataset(int id);
         bool AuthenrticateAdmin(int id);
+
+        public List<Role> getUserRoleNames(int id);
     }
 
     public class UserService : IUserService
@@ -144,7 +147,7 @@ namespace dotnetcondapackage.Services
             return isAdmin;
         }
 
-        private List<UserRole> getUserRoles(int id)
+        public List<UserRole> getUserRoles(int id)
         {
 
             var userroles = _userRoles.Find(x => x.UserId == id).ToList();
@@ -165,6 +168,20 @@ namespace dotnetcondapackage.Services
                              SchemaDatasetName = d.Schema+"."+d.DatasetName
                          };
           return result.ToList();
+        }
+
+
+        public List<Role> getUserRoleNames(int id)
+        {
+            var result = from ur in _userRoles.AsQueryable()
+                         join r in _roles.AsQueryable()
+                         on ur.RoleId equals r.RoleId
+                         where (ur.UserId == id)
+                         select new Role
+                         {
+                             RoleName = r.RoleName
+                         };
+            return result.ToList();
         }
 
         IEnumerable<User> IUserService.GetAllUser()

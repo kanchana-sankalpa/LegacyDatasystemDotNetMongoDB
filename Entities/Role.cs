@@ -20,7 +20,7 @@ namespace dotnetcondapackage.Entities
         public string LastModifiedBy { get; set; }
         public DateTime LastModifiedTime { get; set; }
 
-        //public const string Admin = "Admin";
-        //public const string User = "User";
+        public const string Admin = "Admin";
+        public const string User = "User";
     }
 }

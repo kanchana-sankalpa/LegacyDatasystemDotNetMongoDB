@@ -67,8 +67,17 @@ namespace dotnetcondapackage.Controllers
             return Ok(user);
         }
 
+        [HttpGet("role/dataset")]
+        public IActionResult GetRoleDatasetById()
+        {
+            var currentUserId = int.Parse(User.Identity.Name);
+            List<Role> results = _userService.getUserRoleNames(currentUserId);
 
-    
+            if (results == null)
+                return NotFound();
 
-}
+            return Ok(results);
+        }
+
+    }
 }

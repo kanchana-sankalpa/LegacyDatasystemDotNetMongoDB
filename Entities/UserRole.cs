@@ -16,7 +16,7 @@ namespace dotnetcondapackage.Entities
         public int RoleId { get; set; }
 
         public string LastModifiedBy { get; set; }
-        public DateTime LastModifiedTime { get; set; }
+        public DateTime LastModifedTime { get; set; }
 
     }
 }
