@@ -75,6 +75,7 @@ namespace LegacyDatasystemDotNetMongoB.Services
         {
             IMongoCollection<BsonDocument> alldocs = _connection.GetCollection<BsonDocument>(collectionName);
             var filter = Builders<BsonDocument>.Filter.Text(searchWord);
+           
             List<BsonDocument> query;
            // return await alldocs.Find(filter).ToListAsync();
             try
